@@ -1,0 +1,165 @@
+sources:
+  - id: pr_gov_main
+    name: PR.gov
+    url: https://www.pr.gov/
+    category: government_portal
+    geography: puerto_rico
+    language: es
+    trust_level: official
+    source_type: website
+    update_frequency: unknown
+    notes: Central official portal of the Government of Puerto Rico.
+
+  - id: pr_gov_alertas
+    name: Portal de Alertas del Gobierno de Puerto Rico
+    url: https://www.alertas.pr.gov/
+    category: alerts
+    geography: puerto_rico
+    language: es
+    trust_level: official
+    source_type: website
+    update_frequency: real_time_or_as_needed
+    notes: Alerts, missing persons, emergency and risk communications.
+
+  - id: pr_transparencia
+    name: Portal de Transparencia Pública
+    url: https://transparencia.pr.gov/
+    category: transparency
+    geography: puerto_rico
+    language: es
+    trust_level: official
+    source_type: website
+    update_frequency: as_needed
+    notes: Public information request portal and agency transparency links.
+
+  - id: pr_dtop
+    name: Departamento de Transportación y Obras Públicas
+    url: https://www.dtop.pr.gov/
+    category: transportation
+    geography: puerto_rico
+    language: es
+    trust_level: official
+    source_type: website
+    update_frequency: unknown
+    notes: Transportation, roads, licenses, public works, and mobility-related information.
+
+  - id: pr_salud
+    name: Departamento de Salud de Puerto Rico
+    url: https://www.salud.pr.gov/
+    category: health
+    geography: puerto_rico
+    language: es
+    trust_level: official
+    source_type: website
+    update_frequency: unknown
+    notes: Official health department information.
+
+  - id: pr_drna
+    name: Departamento de Recursos Naturales y Ambientales
+    url: https://www.drna.pr.gov/
+    category: environment
+    geography: puerto_rico
+    language: es
+    trust_level: official
+    source_type: website
+    update_frequency: unknown
+    notes: Natural resources, environment, permits, coastal and ecological information.
+
+  - id: pr_ddec
+    name: Departamento de Desarrollo Económico y Comercio
+    url: https://www.ddec.pr.gov/
+    category: economic_development
+    geography: puerto_rico
+    language: es
+    trust_level: official
+    source_type: website
+    update_frequency: unknown
+    notes: Economic development, incentives, business resources, and entrepreneurship information.
+
+  - id: pr_hacienda
+    name: Departamento de Hacienda
+    url: https://hacienda.pr.gov/
+    category: taxes
+    geography: puerto_rico
+    language: es
+    trust_level: official
+    source_type: website
+    update_frequency: unknown
+    notes: Tax information, merchant registration, filings, and treasury services.
+
+  - id: pr_estado
+    name: Departamento de Estado de Puerto Rico
+    url: https://www.estado.pr.gov/
+    category: business_registration
+    geography: puerto_rico
+    language: es
+    trust_level: official
+    source_type: website
+    update_frequency: unknown
+    notes: Corporate registry, certificates, and entity-related services.
+
+  - id: san_juan_municipio
+    name: Municipio de San Juan
+    url: https://sanjuan.pr/
+    category: municipal_services
+    geography: san_juan
+    language: es
+    trust_level: official
+    source_type: website
+    update_frequency: unknown
+    notes: Municipal services, permits, announcements, and local San Juan information.
+
+  - id: discover_puerto_rico
+    name: Discover Puerto Rico
+    url: https://www.discoverpuertorico.com/
+    category: tourism
+    geography: puerto_rico
+    language: en
+    trust_level: institutional
+    source_type: website
+    update_frequency: frequent
+    notes: Official destination marketing organization for Puerto Rico tourism content.
+
+  - id: census_api
+    name: U.S. Census Bureau Data API
+    url: https://api.census.gov/data.html
+    category: demographics
+    geography: puerto_rico
+    language: en
+    trust_level: official
+    source_type: api
+    update_frequency: dataset_dependent
+    notes: Census datasets including Puerto Rico demographic and economic data.
+
+  - id: census_data
+    name: Explore Census Data
+    url: https://data.census.gov/
+    category: demographics
+    geography: puerto_rico
+    language: en
+    trust_level: official
+    source_type: website
+    update_frequency: dataset_dependent
+    notes: Census data explorer for Puerto Rico geographies.
+
+  - id: nws_san_juan
+    name: National Weather Service San Juan
+    url: https://www.weather.gov/sju/
+    category: weather
+    geography: puerto_rico
+    language: en
+    trust_level: official
+    source_type: website
+    update_frequency: real_time_or_frequent
+    notes: Weather forecasts, watches, warnings, advisories, and tropical weather information.
+
+  - id: usgs_earthquakes
+    name: USGS Latest Earthquakes
+    url: https://earthquake.usgs.gov/earthquakes/map/
+    category: earthquakes
+    geography: puerto_rico_caribbean
+    language: en
+    trust_level: official
+    source_type: api_or_website
+    update_frequency: real_time_or_frequent
+    notes: Earthquake monitoring relevant to Puerto Rico and the Caribbean.
