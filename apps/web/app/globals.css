@@ -75,6 +75,7 @@ main {
 
 .nav-links {
   display: flex;
+  flex-wrap: wrap;
   gap: 14px;
   color: var(--muted);
   font-weight: 600;
@@ -120,9 +121,21 @@ p {
   line-height: 1.7;
 }
 
+code {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  padding: 2px 6px;
+}
+
 .lede {
   max-width: 760px;
   font-size: 1.18rem;
+}
+
+.muted {
+  color: var(--muted);
 }
 
 .actions {
@@ -193,9 +206,22 @@ p {
   font-weight: 700;
 }
 
-.badge.official {
+.badge.official,
+.badge.healthy {
   color: #07111f;
   background: var(--accent);
+  border-color: transparent;
+}
+
+.badge.warning {
+  color: #07111f;
+  background: var(--warning);
+  border-color: transparent;
+}
+
+.badge.danger {
+  color: #07111f;
+  background: var(--danger);
   border-color: transparent;
 }
 
@@ -279,11 +305,80 @@ textarea {
   font-weight: 700;
 }
 
-.safety-note {
+.safety-note,
+.notice {
   border: 1px solid rgba(255, 209, 102, 0.28);
   border-radius: 18px;
   color: var(--warning);
   padding: 14px 16px;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 28px 0;
+}
+
+.metric-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 18px;
+}
+
+.metric-card span {
+  color: var(--muted);
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.metric-card strong {
+  display: block;
+  font-size: 2rem;
+  line-height: 1;
+  margin-top: 10px;
+}
+
+.status-table-wrap {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  margin-top: 24px;
+  overflow-x: auto;
+}
+
+.status-table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 900px;
+}
+
+.status-table th,
+.status-table td {
+  border-bottom: 1px solid var(--line);
+  padding: 16px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.status-table th {
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.status-table td small {
+  color: var(--muted);
+  display: block;
+  line-height: 1.5;
+  margin-top: 6px;
+  max-width: 420px;
+}
+
+.status-table tr:last-child td {
+  border-bottom: 0;
 }
 
 .footer-note {
@@ -297,7 +392,8 @@ textarea {
   .grid,
   .source-grid,
   .filters,
-  .chat-shell {
+  .chat-shell,
+  .metric-grid {
     grid-template-columns: 1fr;
   }
 
