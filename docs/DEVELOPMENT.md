@@ -23,9 +23,11 @@ pytest -q
 The tests intentionally avoid external network access. They check:
 
 - source registry loading
+- API runtime settings and CORS parsing
 - corpus readiness behavior when document directories are missing
 - keyword retrieval safe empty fallback
 - hybrid retrieval safe empty fallback
+- refresh pipeline dry-run behavior
 - FastAPI `/health`
 - FastAPI `/sources`
 - FastAPI `/ask` response contract
@@ -60,6 +62,15 @@ http://127.0.0.1:8000/docs
 http://127.0.0.1:8000/health
 ```
 
+Local development CORS defaults allow:
+
+```txt
+http://localhost:3000
+http://127.0.0.1:3000
+```
+
+For production, set `SANJUAN_ENV=production` and `SANJUAN_CORS_ORIGINS=https://your-web-domain.com`.
+
 ## Web app
 
 Run the web app:
@@ -78,13 +89,26 @@ http://localhost:3000
 
 ## Full local retrieval flow
 
-When you want real local retrieval artifacts, run:
+When you want real local retrieval artifacts, run the single refresh command:
+
+```bash
+python -m packages.ingestion.refresh_corpus --pretty
+```
+
+Equivalent manual steps:
 
 ```bash
 python -m packages.ingestion.batch_ingest_sources --pretty
+python -m packages.ingestion.source_status --pretty --write-json
 python -m packages.retrieval.chunk_documents --pretty
 python -m packages.retrieval.local_vector_search build --pretty
 python -m packages.retrieval.hybrid_search "business registration Puerto Rico" --pretty
+```
+
+To inspect the scheduler plan without network access or writes:
+
+```bash
+python -m packages.ingestion.refresh_corpus --dry-run --pretty
 ```
 
 Then start the API and web app.
@@ -100,7 +124,7 @@ npm install
 npm run build
 ```
 
-Read `docs/DEPLOYMENT.md` for backend and web deployment configuration.
+Read `docs/DEPLOYMENT.md` for backend and web deployment configuration. Read `docs/SCHEDULER_PLAN.md` for scheduled ingestion options.
 
 ## CI
 
