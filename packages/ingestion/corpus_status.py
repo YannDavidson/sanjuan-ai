@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Any
 
 from packages.ingestion.batch_ingest_sources import DEFAULT_OUTPUT_DIR as DEFAULT_RAW_DIR
-from packages.retrieval.chunk_documents import DEFAULT_CHUNKS_DIR
+from packages.retrieval.chunk_documents import DEFAULT_OUTPUT_DIR as DEFAULT_CHUNKS_DIR
 from packages.retrieval.local_vector_search import DEFAULT_VECTORS_DIR
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
