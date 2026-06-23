@@ -12,15 +12,15 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Smoke tests
+## Smoke tests and fixture retrieval tests
 
-Run the smoke tests from the repository root:
+Run all tests from the repository root:
 
 ```bash
 pytest -q
 ```
 
-The smoke tests intentionally avoid external network access and do not require generated corpus artifacts. They check:
+The tests intentionally avoid external network access. They check:
 
 - source registry loading
 - corpus readiness behavior when document directories are missing
@@ -29,6 +29,21 @@ The smoke tests intentionally avoid external network access and do not require g
 - FastAPI `/health`
 - FastAPI `/sources`
 - FastAPI `/ask` response contract
+- keyword retrieval against committed demo corpus fixtures
+- local vector-store generation from fixture chunks
+- hybrid retrieval over fixture chunks + generated fixture vectors
+
+## Test fixtures
+
+Retrieval fixtures live under:
+
+```txt
+tests/fixtures/corpus/
+├── raw/
+└── chunks/
+```
+
+These fixtures are intentionally small, deterministic, and safe to commit. They are not official Puerto Rico guidance; they are test data for CI.
 
 ## Backend
 
@@ -74,6 +89,19 @@ python -m packages.retrieval.hybrid_search "business registration Puerto Rico" -
 
 Then start the API and web app.
 
+## Deployment checks
+
+Before deployment, run:
+
+```bash
+pytest -q
+cd apps/web
+npm install
+npm run build
+```
+
+Read `docs/DEPLOYMENT.md` for backend and web deployment configuration.
+
 ## CI
 
 GitHub Actions runs on pushes and pull requests to `main`.
@@ -85,4 +113,4 @@ The workflow currently checks:
 3. Web dependency install
 4. `npm run build` for `apps/web`
 
-The CI workflow does not require secrets.
+The CI workflow does not require secrets or network access for retrieval tests.
