@@ -313,11 +313,31 @@ textarea {
   padding: 14px 16px;
 }
 
+.notice strong {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.notice ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+.notice li {
+  color: var(--warning);
+  line-height: 1.6;
+  margin: 6px 0;
+}
+
 .metric-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
   margin: 28px 0;
+}
+
+.metric-grid.compact-metrics {
+  margin-top: 18px;
 }
 
 .metric-card {
