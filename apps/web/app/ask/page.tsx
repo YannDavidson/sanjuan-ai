@@ -35,13 +35,16 @@ export default function AskPage() {
     }
   }
 
+  const ingestion = answer?.ingestion_status;
+  const hasCorpusWarnings = Boolean(ingestion?.warnings?.length);
+
   return (
     <section className="container section">
       <div className="eyebrow">Ask SanJuan AI</div>
       <h1>Ask with sources, not guesses.</h1>
       <p className="lede">
-        This page now calls the FastAPI backend and renders the citation-first answer contract SanJuan AI will use for
-        retrieval: direct answer, confidence, citations, source cards, and safety notes for high-risk topics.
+        This page calls the FastAPI backend and renders SanJuan AI's citation-first answer contract: direct answer,
+        confidence, citations, source cards, safety notes, and corpus readiness.
       </p>
 
       <div className="chat-shell section">
@@ -68,7 +71,7 @@ export default function AskPage() {
             <button className="button primary" type="submit" disabled={isLoading}>
               {isLoading ? "Asking..." : "Ask SanJuan AI"}
             </button>
-            <span className="badge">Live API connection</span>
+            <span className="badge">Hybrid retrieval</span>
           </div>
 
           {error && <p className="error-message">{error}</p>}
@@ -97,6 +100,40 @@ export default function AskPage() {
             {answer.safety_note && <p className="safety-note">{answer.safety_note}</p>}
           </div>
 
+          {ingestion && (
+            <section className="section compact-section">
+              <h2>Corpus readiness</h2>
+              {hasCorpusWarnings && (
+                <div className="notice">
+                  <strong>Answer may be limited.</strong>
+                  <ul>
+                    {ingestion.warnings.map((warning) => (
+                      <li key={warning}>{warning}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <div className="metric-grid compact-metrics">
+                <div className="metric-card">
+                  <span>Raw docs</span>
+                  <strong>{ingestion.raw_documents_count}</strong>
+                </div>
+                <div className="metric-card">
+                  <span>Chunks</span>
+                  <strong>{ingestion.chunks_count}</strong>
+                </div>
+                <div className="metric-card">
+                  <span>Vectors</span>
+                  <strong>{ingestion.vectors_count}</strong>
+                </div>
+                <div className="metric-card">
+                  <span>Mode</span>
+                  <strong>{ingestion.ready_for_vector_retrieval ? "hybrid" : "keyword"}</strong>
+                </div>
+              </div>
+            </section>
+          )}
+
           <section className="section compact-section">
             <h2>Citations</h2>
             {answer.citations.length > 0 ? (
@@ -110,6 +147,7 @@ export default function AskPage() {
                     <h3>{citation.source_name}</h3>
                     {citation.quote && <p>“{citation.quote}”</p>}
                     {citation.snippet && <p>{citation.snippet}</p>}
+                    {citation.fetched_at && <p className="muted">Fetched: {citation.fetched_at}</p>}
                     <a className="button" href={citation.url} target="_blank" rel="noreferrer">
                       Open citation
                     </a>
@@ -149,10 +187,10 @@ export default function AskPage() {
         <div className="card strong">
           <div className="eyebrow">Ready for retrieval</div>
           <div className="answer-box">
-            <h2>Ask a question to test the backend connection.</h2>
+            <h2>Ask a question to test hybrid retrieval.</h2>
             <p>
-              The backend currently returns a placeholder answer with real source cards. Next, the ingestion and retrieval
-              pipeline will replace this placeholder with evidence-backed answers from Puerto Rico source pages.
+              The backend now uses local hybrid retrieval. Run ingestion, chunking, and vector build to unlock the strongest
+              source-grounded answers.
             </p>
           </div>
         </div>
