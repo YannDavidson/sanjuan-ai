@@ -19,6 +19,16 @@ Then open:
 - Health check: <http://127.0.0.1:8000/health>
 - Sources: <http://127.0.0.1:8000/sources>
 
+## Smoke tests
+
+Run lightweight local checks before pushing changes:
+
+```bash
+pytest -q
+```
+
+The smoke tests do not require network access or generated corpus artifacts. They check source loading, corpus readiness, safe retrieval fallbacks, and the FastAPI `/health`, `/sources`, and `/ask` contracts.
+
 ## Endpoints
 
 ### `GET /health`
@@ -249,3 +259,7 @@ curl -X POST "http://127.0.0.1:8000/ask" \
   -H "Content-Type: application/json" \
   -d '{"question":"business registration Puerto Rico","language":"en"}'
 ```
+
+## Development and CI
+
+See [`docs/DEVELOPMENT.md`](../../docs/DEVELOPMENT.md) for the local development workflow, smoke test details, and GitHub Actions CI behavior.
