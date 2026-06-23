@@ -1,6 +1,6 @@
 # SanJuan AI API
 
-FastAPI backend for SanJuan AI's Puerto Rico source registry, local ingestion pipeline, retrieval layer, and citation-first `/ask` endpoint.
+FastAPI backend for SanJuan AI's Puerto Rico source registry, local ingestion pipeline, hybrid retrieval layer, and citation-first `/ask` endpoint.
 
 ## Run locally
 
@@ -23,12 +23,22 @@ Then open:
 
 ### `GET /health`
 
-Returns service health.
+Returns service health and local corpus readiness.
 
 ```json
 {
   "status": "ok",
-  "service": "sanjuan-ai-api"
+  "service": "sanjuan-ai-api",
+  "corpus": {
+    "ready_for_keyword_retrieval": true,
+    "ready_for_vector_retrieval": false,
+    "raw_documents_count": 15,
+    "chunks_count": 80,
+    "vectors_count": 0,
+    "warnings": [
+      "No vector artifacts found. Hybrid retrieval will use keyword-only fallback until vectors are built."
+    ]
+  }
 }
 ```
 
@@ -61,7 +71,7 @@ curl "http://127.0.0.1:8000/sources/pr_gov_main"
 
 ### `POST /ask`
 
-Citation-first assistant endpoint. The MVP uses local keyword retrieval over chunked documents and returns extractive answers from the top evidence block. It does not call an external LLM yet.
+Citation-first assistant endpoint. The MVP now uses local **hybrid retrieval**, combining keyword search with local vector search when vector artifacts exist. It returns extractive answers from the top evidence block and does not call an external LLM yet.
 
 Example:
 
@@ -79,8 +89,9 @@ The response includes:
 - `citations`
 - `sources`
 - `safety_note`
+- `ingestion_status`
 
-If no chunks are available or no evidence is found, `/ask` returns a clear fallback instead of guessing.
+If no chunks are available or no evidence is found, `/ask` returns a clear fallback instead of guessing. The `ingestion_status` object explains whether raw documents, chunks, or vectors are missing.
 
 ## Validate source registry
 
@@ -197,14 +208,37 @@ python -m packages.retrieval.keyword_search "permit" \
   --pretty
 ```
 
-The search layer ranks chunks using exact phrase matches, token overlap, metadata matches, and source trust boosts. It is intentionally simple and transparent for the MVP.
+The keyword layer ranks chunks using exact phrase matches, token overlap, metadata matches, and source trust boosts. It is intentionally simple and transparent for the MVP.
+
+## Build and search local vectors
+
+Build the local deterministic vector store:
+
+```bash
+python -m packages.retrieval.local_vector_search build --pretty
+```
+
+Search local vectors:
+
+```bash
+python -m packages.retrieval.local_vector_search search "business registration Puerto Rico" --pretty
+```
+
+## Hybrid retrieval
+
+Hybrid retrieval combines keyword and vector results, deduplicates by `chunk_id`, preserves citation metadata, and falls back to keyword-only behavior when vectors are missing.
+
+```bash
+python -m packages.retrieval.hybrid_search "business registration Puerto Rico" --pretty
+```
 
 ## End-to-end local data flow
 
 ```bash
 python -m packages.ingestion.batch_ingest_sources --pretty
 python -m packages.retrieval.chunk_documents --pretty
-python -m packages.retrieval.keyword_search "business registration Puerto Rico" --pretty
+python -m packages.retrieval.local_vector_search build --pretty
+python -m packages.retrieval.hybrid_search "business registration Puerto Rico" --pretty
 uvicorn apps.api.main:app --reload
 ```
 
