@@ -43,10 +43,12 @@ Recommended production variables:
 
 ```bash
 SANJUAN_ENV=production
-SANJUAN_API_VERSION=0.5.0
+SANJUAN_API_VERSION=0.6.0
 SANJUAN_CORS_ORIGINS=https://your-web-domain.com
 SANJUAN_CORS_ALLOW_CREDENTIALS=false
 SANJUAN_RETRIEVAL_MODE=hybrid
+SANJUAN_RATE_LIMIT_ENABLED=true
+SANJUAN_ASK_RATE_LIMIT_PER_MINUTE=30
 ```
 
 `SANJUAN_CORS_ORIGINS` is a comma-separated list. In production, set it explicitly to the deployed web origin. In local development, the API defaults to:
@@ -56,6 +58,8 @@ http://localhost:3000,http://127.0.0.1:3000
 ```
 
 The API also adds conservative security headers, including `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, and `Permissions-Policy`.
+
+`/ask` includes MVP in-memory rate limiting. This is useful for single-process demos, but public production traffic should also use an edge proxy, API gateway, or Redis-backed limiter. Read `docs/API_ABUSE_PROTECTION.md` before public exposure.
 
 ## Web deployment
 
@@ -120,6 +124,8 @@ For scheduler planning without live fetching or writes:
 python -m packages.ingestion.refresh_corpus --dry-run --pretty
 ```
 
+The repository also includes `.github/workflows/refresh-dry-run.yml`, a scheduled/manual GitHub Actions workflow that validates the dry-run path daily without live fetching.
+
 Read `docs/SCHEDULER_PLAN.md` for hosted cron options and recommended cadence.
 
 ## Container deployment
@@ -154,9 +160,11 @@ After deploying:
 1. Open `/health` on the API.
 2. Confirm the response includes `status: ok`.
 3. Confirm `cors_configured: true` in production.
-4. Set `NEXT_PUBLIC_SANJUAN_API_URL` in the web app.
-5. Open `/ask` and submit a test question.
-6. Open `/sources` and `/status`.
+4. Confirm `rate_limit_enabled: true` unless intentionally disabled.
+5. Set `NEXT_PUBLIC_SANJUAN_API_URL` in the web app.
+6. Open `/ask` and submit a test question.
+7. Confirm `/ask` responses include `X-RateLimit-Limit` and `X-RateLimit-Remaining`.
+8. Open `/sources` and `/status`.
 
 ## Current MVP limitation
 
@@ -167,3 +175,4 @@ Recommended future upgrade:
 - Move documents/chunks/vectors into Postgres + pgvector or object storage.
 - Run source refresh through a scheduled worker/cron service.
 - Add an admin-only source refresh endpoint or queue-backed job trigger.
+- Move API rate limiting to edge/API-gateway/Redis-backed infrastructure.
