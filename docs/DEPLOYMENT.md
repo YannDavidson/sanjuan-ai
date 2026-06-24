@@ -51,6 +51,8 @@ SANJUAN_RATE_LIMIT_ENABLED=true
 SANJUAN_ASK_RATE_LIMIT_PER_MINUTE=30
 ```
 
+Keep only one `SANJUAN_API_VERSION` value in production. The current MVP version is `0.6.0`.
+
 `SANJUAN_CORS_ORIGINS` is a comma-separated list. In production, set it explicitly to the deployed web origin. In local development, the API defaults to:
 
 ```bash
