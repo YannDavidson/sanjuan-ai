@@ -17,6 +17,35 @@ TrustLevel = Literal["official", "institutional", "community", "experimental"]
 LanguageCode = Literal["en", "es", "en-es", "multi"]
 
 
+class CrawlRules(BaseModel):
+    """Bounded crawl settings for one source.
+
+    Crawling is opt-in per source. The defaults are intentionally conservative:
+    no crawling unless enabled, a small page cap, no allow-list by default, and
+    common noisy or unsafe paths blocked.
+    """
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+    enabled: bool = Field(default=False, description="Whether bounded crawling is enabled for this source.")
+    max_pages_per_source: int = Field(default=1, ge=1, le=100)
+    allowed_paths: list[str] = Field(default_factory=list)
+    blocked_paths: list[str] = Field(default_factory=list)
+
+    @field_validator("allowed_paths", "blocked_paths")
+    @classmethod
+    def normalize_paths(cls, values: list[str]) -> list[str]:
+        normalized: list[str] = []
+        for value in values:
+            path = value.strip()
+            if not path:
+                continue
+            if not path.startswith("/"):
+                path = f"/{path}"
+            normalized.append(path.rstrip("/") or "/")
+        return sorted(set(normalized))
+
+
 class Source(BaseModel):
     """A single public information source for Puerto Rico."""
 
@@ -32,6 +61,7 @@ class Source(BaseModel):
     source_type: str = Field(..., min_length=2, description="Website, API, PDF, feed, dataset, etc.")
     update_frequency: str | None = Field(default=None)
     notes: str | None = Field(default=None)
+    crawl: CrawlRules | None = Field(default=None)
 
     @field_validator("id")
     @classmethod
