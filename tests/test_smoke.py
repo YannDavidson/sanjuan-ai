@@ -120,8 +120,10 @@ def test_refresh_corpus_dry_run_avoids_network_and_writes(tmp_path: Path) -> Non
     )
 
     assert summary["mode"] == "dry_run"
-    assert summary["network_required"] is True
-    assert summary["writes_artifacts"] is True
+    assert summary["network_required"] is False
+    assert summary["writes_artifacts"] is False
+    assert summary["would_require_network"] is True
+    assert summary["would_write_artifacts"] is True
     assert not (tmp_path / "raw").exists()
     assert not (tmp_path / "status" / "last_refresh.json").exists()
 
