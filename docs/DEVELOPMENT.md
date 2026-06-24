@@ -23,6 +23,8 @@ pytest -q
 The tests intentionally avoid external network access. They check:
 
 - source registry loading
+- source crawl-rule validation
+- safe crawler URL allow/block behavior
 - API runtime settings and CORS parsing
 - API rate limit settings parsing
 - in-memory rate limiter behavior
@@ -127,6 +129,34 @@ python -m packages.ingestion.refresh_corpus --dry-run --pretty
 ```
 
 Then start the API and web app.
+
+## Bounded source crawling
+
+Homepage-only ingestion remains the default:
+
+```bash
+python -m packages.ingestion.batch_ingest_sources --pretty
+```
+
+To crawl selected internal pages for sources with `crawl.enabled=true`:
+
+```bash
+python -m packages.ingestion.batch_ingest_sources --crawl --pretty
+```
+
+For safer local testing, override the page cap:
+
+```bash
+python -m packages.ingestion.batch_ingest_sources --crawl --max-pages 3 --pretty
+```
+
+To debug one source:
+
+```bash
+python -m packages.ingestion.safe_crawler pr_gov_main --max-pages 3 --pretty
+```
+
+Read `docs/CRAWLING_RULES.md` before increasing crawl depth.
 
 ## Deployment checks
 
