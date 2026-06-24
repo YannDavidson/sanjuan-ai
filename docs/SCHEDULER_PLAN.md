@@ -34,6 +34,28 @@ For CI/docs checks that should not fetch live websites:
 python -m packages.ingestion.refresh_corpus --dry-run --pretty
 ```
 
+## GitHub Actions dry-run check
+
+The repository includes a dedicated scheduled workflow:
+
+```txt
+.github/workflows/refresh-dry-run.yml
+```
+
+It runs:
+
+```bash
+pytest -q
+python -m packages.ingestion.refresh_corpus --dry-run --pretty
+```
+
+The workflow supports:
+
+- `workflow_dispatch` for manual checks
+- a daily cron schedule at `09:15 UTC`
+
+This intentionally does **not** fetch live websites or write corpus artifacts. Its purpose is to keep the scheduler wrapper, imports, and dry-run path healthy in CI.
+
 ## Recommended cadence
 
 For the MVP:
