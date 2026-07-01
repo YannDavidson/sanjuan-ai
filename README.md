@@ -1,6 +1,6 @@
-# SanJuan AI KB (Knowledge Base)
+# SanJuan AI KI (Knowledge Infra)
 
-**SanJuan AI KB** is an AI-native civic intelligence platform for Puerto Rico, starting in San Juan and expanding island-wide. The goal is to help residents, founders, visitors, government partners, and local organizations find trustworthy, bilingual, up-to-date information about Puerto Rico through a modern AI assistant and public data layer.
+**SanJuan AI KI** is an AI-native civic intelligence platform for Puerto Rico, starting in San Juan and expanding island-wide. The goal is to help residents, founders, visitors, government partners, and local organizations find trustworthy, bilingual, up-to-date information about Puerto Rico through a modern AI assistant and public data layer.
 
 > Modern Caribbean Intelligence — built for Puerto Rico first.
 
