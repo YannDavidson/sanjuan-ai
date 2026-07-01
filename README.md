@@ -54,7 +54,7 @@ SanJuan AI KB turns that fragmented information into a searchable, explainable, 
 ## Repository structure
 
 ```txt
-sanjuan-ai/
+sanjuan-ai-ki/
 ├── README.md
 ├── docs/
 │   ├── ARCHITECTURE.md
