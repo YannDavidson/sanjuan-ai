@@ -1,6 +1,6 @@
-# SanJuan AI
+# SanJuan AI KB (Knowledge Base)
 
-**SanJuan AI** is an AI-native civic intelligence platform for Puerto Rico, starting in San Juan and expanding island-wide. The goal is to help residents, founders, visitors, government partners, and local organizations find trustworthy, bilingual, up-to-date information about Puerto Rico through a modern AI assistant and public data layer.
+**SanJuan AI KB** is an AI-native civic intelligence platform for Puerto Rico, starting in San Juan and expanding island-wide. The goal is to help residents, founders, visitors, government partners, and local organizations find trustworthy, bilingual, up-to-date information about Puerto Rico through a modern AI assistant and public data layer.
 
 > Modern Caribbean Intelligence — built for Puerto Rico first.
 
@@ -8,7 +8,7 @@
 
 Puerto Rico has important information spread across many places: government portals, agency websites, permits, public safety alerts, tourism pages, business resources, municipal pages, health information, weather, transportation, and community services.
 
-SanJuan AI turns that fragmented information into a searchable, explainable, bilingual knowledge system.
+SanJuan AI KB turns that fragmented information into a searchable, explainable, bilingual knowledge system.
 
 ## What we are building first
 
@@ -41,7 +41,7 @@ SanJuan AI turns that fragmented information into a searchable, explainable, bil
 - Add a small widget: “Ask SanJuan AI.”
 - Prioritize San Juan metro questions first, then expand to all 78 municipalities.
 
-## Suggested technical stack
+## Technical stack
 
 - **Frontend:** Next.js / React
 - **Backend:** FastAPI or Next.js API routes
@@ -49,7 +49,7 @@ SanJuan AI turns that fragmented information into a searchable, explainable, bil
 - **Queue:** Cron jobs first; Celery or Cloud Tasks later
 - **Search:** Hybrid keyword + vector search
 - **AI:** Retrieval-augmented generation with citations
-- **Hosting:** Vercel for frontend; Render/Fly.io/Railway/AWS for backend; Supabase or Neon for Postgres
+- **Hosting:** Vercel for frontend; Render/Fly.io/Railway/AWS for backend; Supabase/Neon for Postgres
 
 ## Repository structure
 
